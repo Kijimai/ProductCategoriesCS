@@ -4,15 +4,19 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <form asp-controller="Product" asp-action="Create" method="POST">
-        <div class="mb-4">
-            <span asp-validation-for="Price" class="text-danger"></span>
-            <label asp-for="Price"></label>
-            <input min="0" type="number" asp-for="Price"><span>$</span>
+<div class="counter">
+    <h1 class="display-4">Household</h1>
+    <div class="d-flex justify-content-center">
+        <div class="flex-grow-1">
+            <h2>Products: </h2>
+            <ul>
+                <li>List Here</li>
+            </ul>
         </div>
-        <button>Submit</button>
-    </form>
-
+        <div class="flex-grow-1">
+            <form>
+                Fill with existing products
+            </form>
+        </div>
+    </div>
 </div>

@@ -15,6 +15,7 @@ public class Product
   public string Name { get; set; }
 
   [Required]
+  [Display(Name = "Product Description")]
   public string Description { get; set; }
 
   [Required]

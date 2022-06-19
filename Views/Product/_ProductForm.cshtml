@@ -1,9 +1,19 @@
 @model Product
 
 
-<form asp-controller="Product" asp-action="Create" method="POST">
+<form asp-controller="Product" asp-action="CreateProduct" method="POST">
   <div class="mb-4">
-    <span asp-validation-for="Price" class="text-danger"></span>
+    <label asp-for="Name"></label>
+    <span asp-validation-for="Name" class="text-danger font-weight-bold"></span>
+    <input asp-for="Name">
+  </div>
+  <div class="mb-4">
+    <label asp-for="Description"></label>
+    <span asp-validation-for="Description" class="text-danger font-weight-bold"></span>
+    <input asp-for="Description">
+  </div>
+  <div class="mb-4">
+    <span asp-validation-for="Price" class="text-danger font-weight-bold"></span>
     <label asp-for="Price"></label>
     <input min="0" type="number" asp-for="Price"><span>$</span>
   </div>

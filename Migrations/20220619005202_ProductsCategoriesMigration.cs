@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductsCategories.Migrations
 {
-    public partial class ProductCategoryMig : Migration
+    public partial class ProductsCategoriesMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

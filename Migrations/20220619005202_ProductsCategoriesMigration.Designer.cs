@@ -11,8 +11,8 @@ using ProductsCategories.Models;
 namespace ProductsCategories.Migrations
 {
     [DbContext(typeof(ProductCategoryContext))]
-    [Migration("20220618003858_ProductCategoryMig")]
-    partial class ProductCategoryMig
+    [Migration("20220619005202_ProductsCategoriesMigration")]
+    partial class ProductsCategoriesMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

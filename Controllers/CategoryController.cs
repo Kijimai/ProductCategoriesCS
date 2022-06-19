@@ -31,4 +31,13 @@ public class CategoryController : Controller
     return ShowCategories();
   }
 
+  [HttpGet("categories/{categoryId}")]
+  public IActionResult ShowOneCategory(int categoryId)
+  {
+    Category? foundCategory = _context.Categories.FirstOrDefault(category => category.CategoryId == categoryId);
+    List<Product> AllExistingProducts = _context.Products.ToList();
+    ViewBag.AllExistingProducts = AllExistingProducts;
+    return View("SingleCategory", foundCategory);
+  }
+
 }

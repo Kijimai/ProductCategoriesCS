@@ -2,6 +2,6 @@
 <ul>
   @foreach (var category in ViewBag.ListOfCategories)
   {
-    <li>@category.Name</li>
+    <li><a href="/categories/@category.CategoryId">@category.Name</a></li>
   }
 </ul>

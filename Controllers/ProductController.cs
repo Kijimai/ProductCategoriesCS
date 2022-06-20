@@ -41,6 +41,6 @@ public class ProductController : Controller
       return ShowProducts();
     }
 
-    return View("SingleProduct");
+    return View("SingleProduct", foundProduct);
   }
 }

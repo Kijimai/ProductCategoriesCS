@@ -35,9 +35,23 @@ public class CategoryController : Controller
   public IActionResult ShowOneCategory(int categoryId)
   {
     Category? foundCategory = _context.Categories.FirstOrDefault(category => category.CategoryId == categoryId);
+
+    if (foundCategory != null)
+    {
+      ViewBag.CategoryName = foundCategory.Name;
+    }
     List<Product> AllExistingProducts = _context.Products.ToList();
+
+    // List<Association> AllProdsInCategory = _context.Products.Include(product => product.Categories).ThenInclude(cat => cat.Products).FirstOrDefault(category => category.CategoryId == categoryId);
+    // ViewBag.AllProdsInCategory = AllProdsInCategory;
+
     ViewBag.AllExistingProducts = AllExistingProducts;
-    return View("SingleCategory", foundCategory);
+    return View("SingleCategory");
   }
 
+  [HttpPost("/category/associate")]
+  public IActionResult AssociateProductToCategory(Association newAssociation)
+  {
+    return RedirectToAction("ShowCategories");
+  }
 }

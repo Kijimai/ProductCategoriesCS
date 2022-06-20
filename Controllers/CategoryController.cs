@@ -50,11 +50,17 @@ public class CategoryController : Controller
   [HttpPost("association/category")]
   public IActionResult AssociateProductToCategory(Association newAssociation)
   {
+    Association? associationID = _context.Associations.FirstOrDefault(assoc => assoc.CategoryId == newAssociation.CategoryId);
     if (ModelState.IsValid)
     {
-      _context.Associations.Add(newAssociation);
-      _context.SaveChanges();
-      return RedirectToAction("ShowCategories", "Category");
+      if (associationID == null)
+      {
+        _context.Associations.Add(newAssociation);
+        _context.SaveChanges();
+        return RedirectToAction("ShowCategories", "Category");
+      }
+      ViewBag.AssociationError = "This category already contains this product!";
+      return ShowCategories();
     }
     return View("Category");
   }

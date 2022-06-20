@@ -1,15 +1,17 @@
 @model Association
-
-<form asp-action="AssociateProductToCategory" asp-controller="Association" method="POST">
-  <div class="mb-4">
-    <label for="CategoryId"></label>
-    <span></span>
-    <select for="CategoryId">
-      @foreach (Product cat in ViewBag.AllExistingProducts)
-      {
-        <option>@cat.Name</option>
-      }
-    </select>
-  </div>
-  <button>Add</button>
-</form>
+<div class="flex-grow-0">
+  <form asp-action="AssociateProductToCategory" asp-controller="Association" method="POST">
+    <h3>Add Product:</h3>
+    <div class="mb-4">
+      <span asp-validation-for="ProductId"></span>
+      <select asp-for="ProductId">
+        @foreach (Product product in ViewBag.AllExistingProducts)
+        {
+          <option value="@product.ProductId">@product.Name</option>
+        }
+      </select>
+    </div>
+    <input asp-for="CategoryId" type="hidden" value="@ViewBag.CurrentCategoryId">
+    <button>Add</button>
+  </form>
+</div>

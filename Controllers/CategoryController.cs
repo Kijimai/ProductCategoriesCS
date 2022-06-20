@@ -39,11 +39,9 @@ public class CategoryController : Controller
     if (foundCategory != null)
     {
       ViewBag.CategoryName = foundCategory.Name;
+      ViewBag.CurrentCategoryId = foundCategory.CategoryId;
     }
     List<Product> AllExistingProducts = _context.Products.ToList();
-
-    // List<Association> AllProdsInCategory = _context.Products.Include(product => product.Categories).ThenInclude(cat => cat.Products).FirstOrDefault(category => category.CategoryId == categoryId);
-    // ViewBag.AllProdsInCategory = AllProdsInCategory;
 
     ViewBag.AllExistingProducts = AllExistingProducts;
     return View("SingleCategory");

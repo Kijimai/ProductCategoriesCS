@@ -12,8 +12,25 @@ public class AssociationController : Controller
   }
 
   [HttpPost("association/category")]
-  public IActionResult AssociateProduct()
+  public IActionResult AssociateProductToCategory(Association newAssociation)
   {
+    if (ModelState.IsValid)
+    {
+      _context.Associations.Add(newAssociation);
+      _context.SaveChanges();
+      return RedirectToAction("ShowCategories", "Category");
+    }
     return View("Category");
+  }
+
+  public IActionResult AssociateCategoryToProduct(Association newAssociation)
+  {
+    if (ModelState.IsValid)
+    {
+      _context.Associations.Add(newAssociation);
+      _context.SaveChanges();
+      return RedirectToAction("ShowProducts", "Product");
+    }
+    return View("Products");
   }
 }

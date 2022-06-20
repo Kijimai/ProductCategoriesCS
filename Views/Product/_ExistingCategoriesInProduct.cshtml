@@ -1,0 +1,9 @@
+<div class="flex-grow-0">
+  <h3>Categories:</h3>
+  <ul>
+    @foreach (Association category in ViewBag.AllCategoriesOfProduct)
+    {
+      <li>@category.Category.Name</li>
+    }
+  </ul>
+</div>

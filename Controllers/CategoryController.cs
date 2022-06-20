@@ -47,9 +47,15 @@ public class CategoryController : Controller
     return View("SingleCategory");
   }
 
-  [HttpPost("/category/associate")]
+  [HttpPost("association/category")]
   public IActionResult AssociateProductToCategory(Association newAssociation)
   {
-    return RedirectToAction("ShowCategories");
+    if (ModelState.IsValid)
+    {
+      _context.Associations.Add(newAssociation);
+      _context.SaveChanges();
+      return RedirectToAction("ShowCategories", "Category");
+    }
+    return View("Category");
   }
 }

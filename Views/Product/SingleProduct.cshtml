@@ -1,8 +1,8 @@
 @model Product
 
-<h2>@Model.Name</h2>
+<h2>@ViewBag.ProductName</h2>
 
-<div class="container d-flex">
+<div class="container d-flex justify-content-between">
   <partial name="_ExistingCategoriesInProduct"></partial>
   <partial name="_AssociateCategoryToProductForm"></partial>
 </div>

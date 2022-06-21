@@ -36,15 +36,21 @@ public class CategoryController : Controller
   {
     Category? foundCategory = _context.Categories.FirstOrDefault(category => category.CategoryId == categoryId);
 
+    Category? myCategory = _context.Categories.Include(c => c.AssociatedProducts).ThenInclude(assocProd => assocProd.Product).First(product => product.CategoryId == categoryId);
+
     if (foundCategory != null)
     {
       ViewBag.CategoryName = foundCategory.Name;
-      ViewBag.CurrentCategoryId = foundCategory.CategoryId;
-    }
-    List<Product> AllExistingProducts = _context.Products.ToList();
+      ViewBag.CurrentCategoryId = categoryId;
+      List<Product> AllExistingProducts = _context.Products.ToList();
+      ViewBag.AllExistingProducts = AllExistingProducts;
 
-    ViewBag.AllExistingProducts = AllExistingProducts;
-    return View("SingleCategory");
+      // var AllProductsInThisCategory = _context.Products.Include(c => c.AssociatedCategories).ThenInclude(p => p.Product).ToList();
+      ViewBag.myCategory = myCategory;
+
+      return View("SingleCategory");
+    }
+    return ShowCategories();
   }
 
   [HttpPost("association/category")]
@@ -53,14 +59,14 @@ public class CategoryController : Controller
     Association? associationID = _context.Associations.FirstOrDefault(assoc => assoc.CategoryId == newAssociation.CategoryId);
     if (ModelState.IsValid)
     {
-      if (associationID == null)
-      {
-        _context.Associations.Add(newAssociation);
-        _context.SaveChanges();
-        return RedirectToAction("ShowCategories", "Category");
-      }
-      ViewBag.AssociationError = "This category already contains this product!";
-      return ShowCategories();
+      // if (associationID == null)
+      // {
+      // }
+      // ViewBag.AssociationError = "This category already contains this product!";
+      // return ShowCategories();
+      _context.Associations.Add(newAssociation);
+      _context.SaveChanges();
+      return RedirectToAction("ShowCategories", "Category");
     }
     return View("Category");
   }

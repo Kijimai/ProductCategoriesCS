@@ -36,8 +36,10 @@ public class ProductController : Controller
   {
     Product? foundProduct = _context.Products.FirstOrDefault(product => product.ProductId == productId);
     List<Category> AllExistingCategories = _context.Categories.ToList();
-    List<Association> AllCategoriesOfProduct = _context.Associations.ToList();
-    ViewBag.AllCategoriesOfProduct = AllCategoriesOfProduct;
+
+    Product? myProduct = _context.Products.Include(product => product.AssociatedCategories).ThenInclude(assocCateg => assocCateg.Category).First(product => product.ProductId == productId);
+
+    ViewBag.myProduct = myProduct;
     ViewBag.AllExistingCategories = AllExistingCategories;
     if (foundProduct == null)
     {
@@ -56,15 +58,16 @@ public class ProductController : Controller
   [HttpPost("association/product")]
   public IActionResult AssociateCategoryToProduct(Association newAssociation)
   {
-    Association? associationID = _context.Associations.FirstOrDefault(assoc => assoc.ProductId == newAssociation.ProductId);
+    Association? associationItem = _context.Associations.First(assoc => assoc.ProductId == newAssociation.ProductId);
     if (ModelState.IsValid)
     {
-      if (associationID == null)
+      if (associationItem == null)
       {
         _context.Associations.Add(newAssociation);
         _context.SaveChanges();
         return RedirectToAction("ShowProducts", "Product");
       }
+      ViewBag.Debug = associationItem;
       ViewBag.AssociationError = "This product already exists in this category!";
       return ShowProducts();
     }

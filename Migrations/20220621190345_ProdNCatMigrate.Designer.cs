@@ -11,8 +11,8 @@ using ProductsCategories.Models;
 namespace ProductsCategories.Migrations
 {
     [DbContext(typeof(ProductCategoryContext))]
-    [Migration("20220619005202_ProductsCategoriesMigration")]
-    partial class ProductsCategoriesMigration
+    [Migration("20220621190345_ProdNCatMigrate")]
+    partial class ProdNCatMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace ProductsCategories.Migrations
                 .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Association", b =>
+            modelBuilder.Entity("ProductsCategories.Models.Association", b =>
                 {
                     b.Property<int>("AssociationId")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace ProductsCategories.Migrations
                     b.ToTable("Associations");
                 });
 
-            modelBuilder.Entity("Category", b =>
+            modelBuilder.Entity("ProductsCategories.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -63,22 +63,7 @@ namespace ProductsCategories.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
-                {
-                    b.Property<int>("CategoriesCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesCategoryId", "ProductsProductId");
-
-                    b.HasIndex("ProductsProductId");
-
-                    b.ToTable("CategoryProduct");
-                });
-
-            modelBuilder.Entity("Product", b =>
+            modelBuilder.Entity("ProductsCategories.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -107,16 +92,16 @@ namespace ProductsCategories.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Association", b =>
+            modelBuilder.Entity("ProductsCategories.Models.Association", b =>
                 {
-                    b.HasOne("Category", "Category")
-                        .WithMany()
+                    b.HasOne("ProductsCategories.Models.Category", "Category")
+                        .WithMany("AssociatedProducts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Product", "Product")
-                        .WithMany()
+                    b.HasOne("ProductsCategories.Models.Product", "Product")
+                        .WithMany("AssociatedCategories")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -126,19 +111,14 @@ namespace ProductsCategories.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
+            modelBuilder.Entity("ProductsCategories.Models.Category", b =>
                 {
-                    b.HasOne("Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AssociatedProducts");
+                });
 
-                    b.HasOne("Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("ProductsCategories.Models.Product", b =>
+                {
+                    b.Navigation("AssociatedCategories");
                 });
 #pragma warning restore 612, 618
         }

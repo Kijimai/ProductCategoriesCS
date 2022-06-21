@@ -1,7 +1,11 @@
 <div class="flex-grow-0">
   <h3>Categories:</h3>
   <ul>
-    @foreach (Association category in ViewBag.AllCategoriesOfProduct)
+    @if (ViewBag.myProduct.AssociatedCategories.Count == 0)
+    {
+      <p>Empty.</p>
+    }
+    @foreach (var category in ViewBag.myProduct.AssociatedCategories)
     {
       <li>@category.Category.Name</li>
     }

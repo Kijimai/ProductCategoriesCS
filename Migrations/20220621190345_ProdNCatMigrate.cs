@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductsCategories.Migrations
 {
-    public partial class ProductsCategoriesMigration : Migration
+    public partial class ProdNCatMigrate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -77,31 +77,6 @@ namespace ProductsCategories.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "CategoryProduct",
-                columns: table => new
-                {
-                    CategoriesCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ProductsProductId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryProduct", x => new { x.CategoriesCategoryId, x.ProductsProductId });
-                    table.ForeignKey(
-                        name: "FK_CategoryProduct_Categories_CategoriesCategoryId",
-                        column: x => x.CategoriesCategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryProduct_Products_ProductsProductId",
-                        column: x => x.ProductsProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Associations_CategoryId",
                 table: "Associations",
@@ -111,20 +86,12 @@ namespace ProductsCategories.Migrations
                 name: "IX_Associations_ProductId",
                 table: "Associations",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryProduct_ProductsProductId",
-                table: "CategoryProduct",
-                column: "ProductsProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Associations");
-
-            migrationBuilder.DropTable(
-                name: "CategoryProduct");
 
             migrationBuilder.DropTable(
                 name: "Categories");

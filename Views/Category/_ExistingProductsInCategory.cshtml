@@ -1,11 +1,13 @@
 <div class="flex-grow-0">
   <h3>Products: </h3>
   <ul>
-    
+    @if (ViewBag.myCategory.AssociatedProducts.Count == 0)
+    {
+      <p>Empty.</p>
+    }
+    @foreach (var item in ViewBag.myCategory.AssociatedProducts)
+    {
+      <li>@item.Product.Name</li>
+    }
   </ul>
 </div>
-
-@* @foreach (Association item in ViewBag.AllProdsInCategory)
-  {
-  <p>@item.Product.Name</p>
-  } *@
